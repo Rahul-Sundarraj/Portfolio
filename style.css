@@ -1,0 +1,1579 @@
+/* ==========================================================================
+   RAHUL O S - PORTFOLIO STYLESHEET
+   Aesthetics: Old college bench (Past) meets crisp interactive tools (Present)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES & DESIGN SYSTEM
+   -------------------------------------------------------------------------- */
+:root {
+  --wood-dark: #b8863b;      /* Warm golden brown oak */
+  --wood-mid: #d2a15c;       /* Honey-pine base */
+  --wood-light: #dfb679;     /* Light-pine highlight surface */
+  --wood-highlight: #ebd0a3; /* Bright wood grain edge */
+  
+  --paper-cream: #FAF6F0;
+  --paper-cream-darker: #f3ece2;
+  --paper-line: rgba(61, 126, 166, 0.15); /* Light blue lines for ruled paper */
+  --paper-margin: rgba(232, 96, 76, 0.25); /* Pink margin line */
+  
+  --text-dark: #2B2620;
+  --text-muted: #5c5248;
+  
+  /* Primary Accent Colors */
+  --accent-yellow: #F5C542;
+  --accent-coral: #E8604C;
+  --accent-teal: #2A9D8F;
+  --accent-blue: #3D7EA6;
+  
+  /* Fonts */
+  --font-headings: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-handwritten: 'Caveat', cursive;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --transition-normal: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --shadow-tactile: 0 4px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-paper: 0 10px 20px rgba(0,0,0,0.12), 0 4px 6px rgba(0,0,0,0.06);
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--wood-dark);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   2. WOOD BENCH BACKGROUND LAYER
+   -------------------------------------------------------------------------- */
+.bench-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--wood-dark) 0%, var(--wood-mid) 50%, var(--wood-light) 100%);
+}
+
+/* Layering the noise filter for real wood texture look */
+.bench-grain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 250%; /* Tall enough to slide up in parallax */
+  opacity: 0.28;
+  background: 
+    repeating-linear-gradient(
+      90deg, 
+      rgba(88, 51, 14, 0.08) 0px, 
+      rgba(88, 51, 14, 0.08) 1px, 
+      transparent 1px, 
+      transparent 18px
+    ),
+    repeating-linear-gradient(
+      90deg, 
+      rgba(0, 0, 0, 0.04) 0px, 
+      rgba(0, 0, 0, 0.04) 2px, 
+      transparent 2px, 
+      transparent 40px
+    );
+  pointer-events: none;
+}
+
+.bench-vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+  z-index: -9;
+}
+
+/* --------------------------------------------------------------------------
+   3. WOOD CARVINGS (Embossed/Debossed text & symbols)
+   -------------------------------------------------------------------------- */
+.carvings-container {
+  position: absolute;
+  width: 100%;
+  height: 250%; /* Tall enough to slide up in parallax */
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* The Engraving Text Trick - Calibrated for Light Honey Pine */
+.carving {
+  position: absolute;
+  color: rgba(65, 38, 15, 0.9); /* Deep scratched inner shadow wood-dark color */
+  text-shadow: 
+    -1.5px -1.5px 1px rgba(45, 25, 5, 0.9),  /* Deep crevice shadow */
+    1.5px 1.5px 1.5px rgba(255, 255, 255, 0.5); /* Raised wood light bevel highlight */
+  font-family: var(--font-handwritten);
+  font-size: 2rem;
+  letter-spacing: 1px;
+  transform: rotate(-3deg);
+  user-select: none;
+  opacity: 0.72;
+}
+
+.carving-text {
+  transition: opacity 0.5s ease;
+}
+
+/* Placements scattered down the height of the bench */
+.carving-1 { top: 3%; left: 8%; font-size: 2.2rem; transform: rotate(-5deg); }
+.carving-2 { top: 8%; right: 12%; font-size: 1.8rem; transform: rotate(4deg); }
+.carving-3 { top: 22%; left: 15%; font-size: 1.9rem; transform: rotate(-2deg); }
+.carving-4 { top: 38%; right: 18%; font-size: 2.1rem; transform: rotate(3deg); }
+.carving-5 { top: 55%; left: 10%; font-size: 2rem; transform: rotate(-4deg); }
+.carving-6 { top: 68%; right: 15%; font-size: 2.3rem; transform: rotate(-1deg); }
+.carving-7 { top: 82%; left: 14%; font-size: 1.8rem; transform: rotate(5deg); }
+.carving-8 { top: 92%; right: 10%; font-size: 2rem; transform: rotate(-3deg); }
+.carving-9 { top: 48%; left: 75%; font-size: 1.6rem; transform: rotate(8deg); }
+
+/* SVG Symbols */
+.carving-symbol {
+  color: rgba(30, 15, 5, 0.85);
+  filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.12)) drop-shadow(-1px -1px 1px rgba(0, 0, 0, 0.9));
+}
+.heart-carving { top: 15%; left: 78%; transform: rotate(6deg); }
+.scratch-carving { top: 74%; left: 6%; transform: rotate(-15deg); opacity: 0.4; }
+
+/* --------------------------------------------------------------------------
+   4. THREE.JS CANVAS CONTAINER
+   -------------------------------------------------------------------------- */
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20; /* Layered over the HTML text cards and sticky notes */
+  pointer-events: none; /* Let clicks pass through empty space to HTML underlay */
+}
+
+/* --------------------------------------------------------------------------
+   5. PAGE CONTAINER & SECTIONS LAYOUT
+   -------------------------------------------------------------------------- */
+.page-container {
+  position: relative;
+  z-index: 2; /* Sits on top of the Three.js layer so text is selectable/clickable */
+  width: 100%;
+  max-width: 900px; /* Centered content column */
+  margin: 0 auto;
+  padding: 0 2rem;
+  pointer-events: none; /* Let clicks pass through empty spaces to Three.js canvas */
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 0;
+  position: relative;
+  pointer-events: auto; /* Re-enable pointer events for actual content elements */
+}
+
+.section-title {
+  font-family: var(--font-headings);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--paper-cream);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent-coral);
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   6. HERO SECTION: SCHOOL NOTEBOOK COVER STYLE
+   -------------------------------------------------------------------------- */
+.hero-section {
+  justify-content: center;
+}
+
+.notebook-cover {
+  width: 100%;
+  max-width: 680px;
+  background-color: var(--paper-cream);
+  border-radius: 12px;
+  padding: 3rem;
+  position: relative;
+  box-shadow: var(--shadow-paper);
+  transform: rotate(-1.5deg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.notebook-border {
+  position: absolute;
+  top: 15px;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* Notebook Label / Student Info Box */
+.notebook-label {
+  border: 2px solid var(--text-dark);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    var(--paper-line) 27px,
+    var(--paper-line) 28px
+  );
+  line-height: 28px;
+}
+
+.notebook-row {
+  display: flex;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.notebook-row:last-child {
+  margin-bottom: 0;
+}
+
+.label-title {
+  font-weight: 700;
+  width: 110px;
+  color: var(--text-muted);
+}
+
+.label-value {
+  flex-grow: 1;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.label-value.font-small {
+  font-size: 0.8rem;
+}
+
+.hero-content {
+  margin-bottom: 2.5rem;
+}
+
+.hero-title {
+  font-family: var(--font-headings);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-family: var(--font-handwritten);
+  font-size: 1.8rem;
+  color: var(--accent-blue);
+  min-height: 38px;
+}
+
+.cursor {
+  animation: blink 0.8s infinite;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+/* Interactive Laptop Screen Screen-mockup */
+.hero-prop-wrapper {
+  position: relative;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.laptop-prop {
+  width: 100%;
+  max-width: 480px;
+  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.2));
+}
+
+.laptop-screen {
+  background-color: #1a1a1a;
+  border-radius: 8px 8px 0 0;
+  padding: 8px;
+  border: 3px solid #333;
+}
+
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #2d2d2d;
+  margin-bottom: 8px;
+}
+
+.screen-header .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.screen-header .dot.red { background-color: #ff5f56; }
+.screen-header .dot.yellow { background-color: #ffbd2e; }
+.screen-header .dot.green { background-color: #27c93f; }
+
+.screen-title {
+  color: #888;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  margin-left: 5px;
+}
+
+.screen-body {
+  height: 150px;
+  background-color: #121212;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+#hero-chart-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.laptop-keyboard {
+  height: 12px;
+  background-color: #d1d1d6;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid #adadb2;
+  border-top: none;
+  position: relative;
+}
+
+.laptop-keyboard::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #8e8e93;
+  border-radius: 2px;
+}
+
+.hero-note {
+  position: absolute;
+  right: -55px;
+  bottom: 20px;
+  font-family: var(--font-handwritten);
+  color: var(--accent-blue);
+  font-size: 1.4rem;
+  transform: rotate(5deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wobbly-arrow {
+  margin-bottom: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   7. EDUCATION SECTION: STACKED INDEX CARDS
+   -------------------------------------------------------------------------- */
+.cards-stack {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.index-card {
+  background-color: var(--paper-cream);
+  border-radius: 6px;
+  padding: 2rem;
+  box-shadow: var(--shadow-tactile);
+  border: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  transition: var(--transition-normal);
+}
+
+.index-card:hover {
+  transform: translateY(-5px) rotate(0.5deg);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Unique offsets for stacked look */
+.card-mit { transform: rotate(-0.5deg); z-index: 3; }
+.card-veveaham { transform: rotate(1deg); z-index: 2; margin-left: 10px; }
+.card-bluebird { transform: rotate(-0.8deg); z-index: 1; margin-left: -5px; }
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: var(--paper-cream-darker);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px dashed rgba(0,0,0,0.15);
+}
+
+.card-mit .card-tag { color: var(--accent-coral); }
+.card-veveaham .card-tag { color: var(--accent-teal); }
+.card-bluebird .card-tag { color: var(--accent-blue); }
+
+.card-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.card-title {
+  font-family: var(--font-headings);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.card-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+.card-details {
+  list-style-type: square;
+  padding-left: 1.2rem;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.card-details li {
+  margin-bottom: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   8. SKILLS SECTION: STICKY NOTES BOARD
+   -------------------------------------------------------------------------- */
+.skills-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .skills-board {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .skills-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skill-note {
+  border-radius: 2px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transform: rotate(var(--rotation));
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  font-family: var(--font-handwritten) !important;
+  font-size: 1.15rem;
+  min-height: 180px;
+}
+
+/* Set specific pastel colors matching sticky notes visual theme */
+.note-yellow { background-color: #FFF9A6; }
+.note-blue   { background-color: #D4F0F0; }
+.note-pink   { background-color: #FFD1D1; }
+.note-green  { background-color: #E2F0CB; }
+.note-purple { background-color: #E8D7FF; }
+.note-orange { background-color: #FFE5D9; }
+
+/* Custom 3D Classic Push Pin Styles (matching flared plastic map pins) */
+.push-pin {
+  position: absolute;
+  top: -24px; /* Positioned slightly higher to accommodate the 3D height */
+  left: 50%;
+  transform: translateX(-50%) rotate(var(--pin-rotation, -5deg));
+  width: 22px;
+  height: 36px;
+  z-index: 15;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skill-note:hover .push-pin {
+  transform: translateX(-50%) scale(1.08) rotate(var(--pin-rotation, -5deg));
+}
+
+.pin-shadow {
+  position: absolute;
+  bottom: -4px;
+  left: 14px;
+  width: 18px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.32);
+  filter: blur(2px);
+  transform: rotate(20deg) scaleY(0.4);
+  z-index: -2;
+}
+
+.pin-head {
+  width: 16px;
+  height: 6px;
+  border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.7) 25%, transparent 55%, rgba(0,0,0,0.25) 90%), var(--pin-color, #e63946);
+  box-shadow: inset 0 1px rgba(255,255,255,0.3);
+}
+
+.pin-neck {
+  width: 10px;
+  height: 12px;
+  margin-top: -1px;
+  background: linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(255,255,255,0.65) 25%, transparent 55%, rgba(0,0,0,0.3) 90%), var(--pin-color, #e63946);
+  border-radius: 1px;
+}
+
+.pin-base {
+  width: 20px;
+  height: 6px;
+  margin-top: -1px;
+  border-radius: 2px 2px 3px 3px;
+  background: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.72) 25%, transparent 55%, rgba(0,0,0,0.25) 90%), var(--pin-color, #e63946);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.pin-needle {
+  width: 3px;
+  height: 13px;
+  margin-top: -1px;
+  background: linear-gradient(to right, #ffffff 0%, #b0b0b5 40%, #5e5e62 100%);
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  z-index: -1;
+}
+
+/* Peeled shadow at the bottom right - Soft blurred shadow layout */
+.skill-note::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 2px;
+  right: 6px;
+  width: 70%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.16);
+  filter: blur(5px);
+  transform: rotate(5deg);
+  transition: transform 0.4s ease, background 0.4s ease;
+}
+
+.skill-note:hover {
+  transform: rotate(-0.5deg) scale(1.04) translateY(-8px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.18);
+  z-index: 10;
+}
+
+.skill-note:hover::after {
+  transform: rotate(7deg) translate(2px, 2px);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.skill-note-title {
+  font-family: var(--font-handwritten) !important;
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  color: #1a1510;
+  border-bottom: 1.5px dashed rgba(0, 0, 0, 0.1);
+  padding-bottom: 4px;
+}
+
+.skill-note-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+}
+
+.skill-handwritten-tag {
+  font-family: var(--font-handwritten) !important;
+  font-size: 1.25rem;
+  color: #4a341e;
+  background-color: rgba(0,0,0,0.03);
+  padding: 1px 4px;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+  border-radius: 2px;
+}
+
+/* Certifications taped notepad scrap */
+.skills-certifications-note {
+  width: 100%;
+  max-width: 580px;
+  background-color: var(--paper-cream);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 2px;
+  padding: 1.5rem 2rem;
+  margin: 3rem auto 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  position: relative;
+  font-family: var(--font-handwritten) !important;
+  transform: rotate(var(--rotation));
+  transition: transform 0.3s ease;
+}
+
+.skills-certifications-note:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+/* No pseudo-element needed for certifications note pin (uses the unified HTML .push-pin structure) */
+
+.cert-handwritten-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #1a1510;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.cert-handwritten-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cert-handwritten-item {
+  font-size: 1.25rem;
+  color: #4a3821;
+  border-bottom: 1px dashed rgba(0,0,0,0.06);
+  padding-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   9. PROJECTS SECTION: SCATTERED DASHBOARD CARDS
+   -------------------------------------------------------------------------- */
+.projects-section {
+  max-width: 100%;
+}
+
+.section-subtitle {
+  color: var(--paper-cream);
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0.85;
+  margin-top: -2.5rem;
+  margin-bottom: 4rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+.guide-device {
+  position: absolute;
+  left: 2%;
+  top: 15%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.projects-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* Modular grid positioning */
+  gap: 1.5rem;
+}
+
+/* Card Styling - Redesigned as Sticky Notes */
+.project-card {
+  border-radius: 2px; /* Sticky notes are straight-cut square paper sheets */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  transform: rotate(var(--rotation));
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  
+  /* Apply handwritten style */
+  font-family: var(--font-handwritten) !important;
+  font-size: 1.15rem;
+}
+
+/* Set specific pastel colors for cards */
+.project-card[data-project-id="1"] { background-color: #FFF9A6; } /* Yellow */
+.project-card[data-project-id="2"] { background-color: #FFD1D1; } /* Pink */
+.project-card[data-project-id="3"] { background-color: #E2F0CB; } /* Green */
+.project-card[data-project-id="4"] { background-color: #D4F0F0; } /* Blue */
+.project-card[data-project-id="5"] { background-color: #E8D7FF; } /* Purple */
+.project-card[data-project-id="6"] { background-color: #FFE5D9; } /* Orange/Peach */
+.project-card[data-project-id="7"] { background-color: #FFF9A6; } /* Yellow */
+.project-card[data-project-id="8"] { background-color: #FFD1D1; } /* Pink */
+.project-card[data-project-id="9"] { background-color: #E2F0CB; } /* Green */
+.project-card[data-project-id="10"] { background-color: #D4F0F0; } /* Blue */
+.project-card[data-project-id="11"] { background-color: #E8D7FF; } /* Purple */
+.project-card[data-project-id="12"] { background-color: #FFF9A6; } /* Yellow */
+
+/* Tape effect at the top of each sticky note */
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 75px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  border-left: 1px dashed rgba(0,0,0,0.05);
+  border-right: 1px dashed rgba(0,0,0,0.05);
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover::before {
+  transform: translateX(-50%) rotate(1deg) scale(1.05);
+}
+
+/* Peeled bottom right corner shadow effect - Soft blurred shadow layout */
+.project-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 2px;
+  right: 6px;
+  width: 70%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.16);
+  filter: blur(5px);
+  transform: rotate(5deg);
+  transition: transform 0.4s ease, background 0.4s ease;
+}
+
+.project-card:hover {
+  transform: rotate(-0.5deg) scale(1.04) translateY(-8px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.project-card:hover::after {
+  transform: rotate(7deg) translate(2px, 2px);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+/* Hide the highlight bar & inline card images (we display images in the modal detail views instead) */
+.card-highlight-bar {
+  display: none;
+}
+
+.project-card .project-img-slot {
+  display: none;
+}
+
+/* Explicitly override and display image slots for SDE cards */
+.project-card.sde-card .project-img-slot {
+  display: block !important;
+  width: 100%;
+  height: 110px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: var(--paper-cream-darker);
+}
+
+.project-card.sde-card .project-img-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project-card.sde-card:hover .project-img-slot img {
+  transform: scale(1.05);
+}
+
+.project-card-header {
+  margin-bottom: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.project-title {
+  font-family: var(--font-handwritten) !important;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1a1510;
+}
+
+.project-category {
+  font-family: var(--font-handwritten) !important;
+  font-size: 0.95rem;
+  color: #6c5a4b;
+}
+
+.project-one-liner {
+  font-family: var(--font-handwritten) !important;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: #2B2620;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.project-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tech-tag {
+  font-family: var(--font-handwritten) !important;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: rgba(0,0,0,0.04) !important;
+  color: #4a3821;
+  padding: 1px 6px;
+  border-radius: 2px;
+  border: 1px dashed rgba(0,0,0,0.1) !important;
+}
+
+.project-chart-box {
+  width: 100%;
+  height: 80px;
+  margin-bottom: 0.8rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px dashed rgba(0,0,0,0.06);
+}
+
+.mini-chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* GRID ALLOCATIONS */
+
+/* Featured Cards (Larger width, has image slot) */
+.featured-card {
+  grid-column: span 3; /* Spans 3 columns of the 6-col grid */
+}
+
+.featured-card .project-img-slot {
+  width: 100%;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(0,0,0,0.08);
+  background-color: var(--paper-cream-darker);
+}
+
+.featured-card .project-img-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featured-card:hover .project-img-slot img {
+  transform: scale(1.05);
+}
+
+.featured-card .project-chart-box {
+  height: 110px; /* Taller chart area for features */
+}
+
+/* Small Cards (Mini charts, no image) */
+.small-card {
+  grid-column: span 2; /* Spans 2 columns */
+}
+
+.small-card .project-title {
+  font-size: 1.05rem;
+}
+
+.small-card .project-chart-box {
+  height: 70px;
+}
+
+/* Closing/Origin Story Card Container */
+.origin-story-container {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+  position: relative;
+}
+
+.origin-note {
+  font-family: var(--font-handwritten);
+  color: var(--accent-yellow);
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+.origin-card {
+  width: 100%;
+  max-width: 440px;
+  border: 2px dashed rgba(0, 0, 0, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   10. CONTACT SECTION: OPEN NOTEBOOK RULED PAGE
+   -------------------------------------------------------------------------- */
+.contact-section {
+  justify-content: flex-start;
+}
+
+.notebook-sheet {
+  width: 100%;
+  max-width: 720px;
+  background-color: var(--paper-cream);
+  border-radius: 4px;
+  padding: 3rem;
+  position: relative;
+  box-shadow: var(--shadow-paper);
+  border: 1px solid rgba(0,0,0,0.08);
+  min-height: 480px;
+  transform: rotate(0.8deg);
+  overflow: hidden;
+}
+
+/* Vertical ruled notebook lines */
+.notepad-lines {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 60px; /* Red margin line */
+  width: 2px;
+  background-color: var(--paper-margin);
+  pointer-events: none;
+}
+
+.notebook-sheet::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 29px,
+    var(--paper-line) 29px,
+    var(--paper-line) 30px
+  );
+  pointer-events: none;
+}
+
+.contact-header {
+  margin-left: 60px; /* Align to the right of red margin */
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-handwritten {
+  font-family: var(--font-handwritten);
+  color: var(--accent-coral);
+  font-size: 1.8rem;
+  display: block;
+  transform: rotate(-3deg);
+  margin-bottom: 0.2rem;
+}
+
+.contact-title {
+  font-family: var(--font-headings);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.contact-card-grid {
+  margin-left: 60px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+}
+
+.contact-row {
+  margin-bottom: 1.2rem;
+  font-size: 1.05rem;
+}
+
+.contact-label {
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-right: 8px;
+}
+
+.contact-value {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.link-accent {
+  color: var(--accent-blue);
+  text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  transition: var(--transition-normal);
+}
+
+.link-accent:hover {
+  border-bottom-color: var(--accent-blue);
+}
+
+.contact-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-headings);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--paper-cream);
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-tactile);
+  transition: var(--transition-normal);
+}
+
+.github-btn {
+  background-color: #24292e;
+}
+.github-btn:hover {
+  background-color: #1a1e22;
+  transform: translateY(-2px);
+}
+
+.linkedin-btn {
+  background-color: #0077b5;
+}
+.linkedin-btn:hover {
+  background-color: #005f92;
+  transform: translateY(-2px);
+}
+
+.resume-btn {
+  background-color: var(--accent-coral);
+}
+.resume-btn:hover {
+  background-color: #d14f3b;
+  transform: translateY(-2px);
+}
+
+.btn-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed !important;
+  background-color: var(--paper-cream-darker) !important;
+  color: var(--text-muted) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: none !important;
+}
+
+.social-icon {
+  fill: currentColor;
+}
+
+.contact-note {
+  font-family: var(--font-handwritten);
+  color: var(--accent-teal);
+  font-size: 1.6rem;
+  transform: rotate(-6deg);
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   11. DASHBOARD DETAIL VIEW MODAL
+   -------------------------------------------------------------------------- */
+.dashboard-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.dashboard-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(26, 18, 10, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.modal-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 860px;
+  max-height: 90vh;
+  background-color: var(--paper-cream);
+  border-radius: 8px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow-y: auto;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.dashboard-modal.active .modal-wrapper {
+  transform: scale(1) translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: var(--transition-normal);
+  z-index: 5;
+}
+
+.modal-close:hover {
+  color: var(--accent-coral);
+  transform: scale(1.1);
+}
+
+.modal-accent-strip {
+  height: 8px;
+  width: 100%;
+  background-color: var(--accent-color);
+}
+
+.modal-content {
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+}
+
+.modal-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-title {
+  font-family: var(--font-headings);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.modal-category {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.8rem;
+}
+
+/* Statistics tiles inside detail view */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.stat-tile {
+  background-color: var(--paper-cream-darker);
+  border-radius: 6px;
+  padding: 1rem;
+  border: 1px dashed rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-val {
+  font-family: var(--font-headings);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.stat-lbl {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.modal-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+}
+
+.modal-tech-box {
+  margin-bottom: 2.2rem;
+}
+
+.meta-label {
+  font-family: var(--font-headings);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+}
+
+.modal-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.modal-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.btn {
+  font-family: var(--font-headings);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  box-shadow: var(--shadow-tactile);
+  transition: var(--transition-normal);
+  text-align: center;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: var(--paper-cream);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
+.btn-secondary {
+  background-color: var(--paper-cream-darker);
+  color: var(--text-dark);
+  border: 1px solid rgba(0,0,0,0.15);
+}
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  background-color: var(--paper-cream);
+}
+
+.modal-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.modal-chart-container {
+  width: 100%;
+  height: 200px;
+  background-color: rgba(0,0,0,0.02);
+  border-radius: 6px;
+  border: 1px dashed rgba(0,0,0,0.12);
+  padding: 10px;
+}
+
+#modal-main-chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.modal-image-slot {
+  width: 100%;
+  height: 180px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-tactile);
+  background-color: var(--paper-cream-darker);
+}
+
+.modal-image-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   12. ANIMATIONS & RESPONSIVE DESIGN
+   -------------------------------------------------------------------------- */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 900px) {
+  .projects-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .featured-card {
+    grid-column: span 2;
+  }
+  
+  .small-card {
+    grid-column: span 2;
+  }
+  
+  .origin-story-container {
+    grid-column: span 4;
+  }
+  
+  .contact-card-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .contact-socials {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .social-button {
+    flex: 1 1 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
+  
+  .page-container {
+    padding: 0 1rem;
+  }
+  
+  .notebook-cover {
+    padding: 1.5rem;
+  }
+  
+  .notebook-label {
+    margin-bottom: 2rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.4rem;
+  }
+  
+  .hero-note {
+    position: static;
+    margin-top: 1rem;
+    flex-direction: row;
+    gap: 8px;
+    transform: rotate(0);
+  }
+  
+  .wobbly-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .pencil-box-contents {
+    grid-template-columns: 1fr;
+  }
+  
+  .notebook-sheet {
+    padding: 2rem 1.5rem;
+  }
+  
+  .notepad-lines {
+    left: 35px;
+  }
+  
+  .notebook-sheet::before {
+    left: 0;
+  }
+  
+  .contact-header {
+    margin-left: 35px;
+  }
+  
+  .contact-card-grid {
+    margin-left: 35px;
+  }
+  
+  .modal-content {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .modal-right {
+    order: -1; /* Display visualization on top on small viewports */
+  }
+  
+  .modal-links {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 580px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .featured-card {
+    grid-column: span 1;
+  }
+  
+  .small-card {
+    grid-column: span 1;
+  }
+  
+  .origin-story-container {
+    grid-column: span 1;
+  }
+}
+
+/* Reduced Motion Settings */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  .project-card:hover {
+    transform: none;
+  }
+  
+  .index-card:hover {
+    transform: none;
+  }
+  
+  .cursor {
+    animation: none;
+  }
+  
+  .laptop-screen {
+    filter: none;
+  }
+}
+
+/* Disable user selection globally while dragging or carving */
+body.dragging-active,
+body.dragging-active * {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
