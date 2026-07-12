@@ -830,6 +830,16 @@ function renderAllCardCharts() {
     // Setup SDE project card structures dynamically (use actual images instead of art graphs)
     const card = document.querySelector(`.project-card[data-project-id="${id}"]`);
     if (card) {
+      // Add Live Demo Badge dynamically if a live demo exists
+      if (project.demo && project.demo !== "#") {
+        if (!card.querySelector(".live-demo-badge")) {
+          const badge = document.createElement("div");
+          badge.className = "live-demo-badge";
+          badge.textContent = "LIVE";
+          card.appendChild(badge);
+        }
+      }
+
       if (isSdeProject(project)) {
         card.classList.add("sde-card");
         
