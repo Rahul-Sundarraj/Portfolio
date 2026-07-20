@@ -444,7 +444,6 @@ body {
 /* Unique offsets for stacked look */
 .card-mit { transform: rotate(-0.5deg); z-index: 3; }
 .card-veveaham { transform: rotate(1deg); z-index: 2; margin-left: 10px; }
-.card-bluebird { transform: rotate(-0.8deg); z-index: 1; margin-left: -5px; }
 
 .card-header {
   display: flex;
@@ -466,7 +465,6 @@ body {
 
 .card-mit .card-tag { color: var(--accent-coral); }
 .card-veveaham .card-tag { color: var(--accent-teal); }
-.card-bluebird .card-tag { color: var(--accent-blue); }
 
 .card-date {
   font-family: var(--font-mono);
